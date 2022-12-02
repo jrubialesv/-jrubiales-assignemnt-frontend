@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Skull from '../components/Skull.vue'
 import AppAccounts from '../components/AppAccounts.vue'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter)  
 
 const routes = [
   {
