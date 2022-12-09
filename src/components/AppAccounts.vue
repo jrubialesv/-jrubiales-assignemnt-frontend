@@ -232,13 +232,13 @@ export default {
     initForm() {
       this.createAccountForm.name = "";
       this.createAccountForm.rate = "";
-      this.createAccountForm.favorite = "";
+      this.createAccountForm.favorite = false;
       this.createAccountForm.status = "";
 
       this.editAccountForm.id = "";
       this.editAccountForm.name = "";
       this.editAccountForm.rate = "";
-      this.editAccountForm.favorite = "";
+      this.editAccountForm.favorite = false;
       this.editAccountForm.status = "";
       
     },
