@@ -3,21 +3,21 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
-          <h1>Accounts</h1>
+          <h1>Recipes</h1>
           <hr />
           <br />
           <b-alert v-if=showMessage variant="success" show>{{ message }}</b-alert>
           <button type="button" class="btn btn-success btn-sm" v-b-modal.account-modal>
-            Add Account
+            Add Recipe
           </button>
           <br /><br />
           <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">Account Name</th>
-                <th scope="col">Account rate</th>
-                <th scope="col">Account favorite</th>
-                <th scope="col">Account Status</th>
+                <th scope="col">Recipe Name</th>
+                <th scope="col">Recipe rate</th>
+                <th scope="col">Recipe favorite</th>
+                <th scope="col">Recipe Status</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -25,7 +25,10 @@
               <tr v-for="account in accounts" :key="account.id">
                 <td>{{ account.name }}</td>
                 <td>{{ account.rate }}</td>
-                <td>{{ account.favorite }}</td>
+                <td>
+                   <!--Add a checkbox  -->
+                  <b-form-checkbox v-model="account.favorite" disabled ></b-form-checkbox>
+                </td>
                 <td>
                   <span v-if="account.status == 'Active'" class="badge badge-success">{{ account.status }}</span>
                   <span v-else class="badge badge-danger">{{
@@ -35,7 +38,7 @@
                 <td>
                   <div class="btn-group" role="group">
                     <button type="button" class="btn btn-info btn-sm" v-b-modal.edit-account-modal
-                      @click="updateAccount(account)">
+                      @click="editAccount(account)">
                       Edit
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" @click="deleteAccount(account)">
@@ -64,8 +67,14 @@
 
           <b-form-group id="form-favorite-group" label="Favorite:" label-for="form-favorite-input">
             <b-form-checkbox id="form-favorite-input" type="bool" v-model="createAccountForm.favorite" placeholder="True/False"
-              required>
+            >
             </b-form-checkbox>
+          </b-form-group>
+
+          <b-form-group id="form-status-group" label="Status:" label-for="form-status-input">
+            <b-form-input id="form-status-input" type="text" v-model="createAccountForm.status" placeholder="Active/Inactive"
+              required>
+            </b-form-input>
           </b-form-group>
 
           <b-button type="submit" variant="outline-info">Submit</b-button>
@@ -76,11 +85,30 @@
       <b-modal ref="editAccountModal" id="edit-account-modal" title="Edit the account" hide-backdrop hide-footer>
         <b-form @submit="onSubmitUpdate" class="w-100">
           <b-form-group id="form-edit-name-group" label="Account Name:" label-for="form-edit-name-input">
-            <b-form-input id="form-edit-name-input" type="text" v-model="createAccountForm.name"
+            <b-form-input id="form-edit-name-input" type="text" v-model="editAccountForm.name"
               placeholder="Account Name" required>
             </b-form-input>
           </b-form-group>
-          <b-button type="submit" variant="outline-info">Submit</b-button>
+
+          <b-form-group id="form-edit-rate-group" label="Rate:" label-for="form-edit-rate-input">
+            <b-form-input id="form-edit-rate-input" type="text" v-model="editAccountForm.rate"
+              placeholder="0-5" required>
+            </b-form-input>
+          </b-form-group>
+
+          <b-form-group id="form-edit-favorite-group" label="Favorite:" label-for="form-edit-favorite-input">
+            <b-form-checkbox id="form-edit-favorite-input" type="bool" v-model="editAccountForm.favorite"
+              placeholder="True/False" required>
+            </b-form-checkbox>
+          </b-form-group>
+
+          <b-form-group id="form-edit-status-group" label="Status:" label-for="form-edit-status-input">
+            <b-form-input id="form-edit-status-input" type="text" v-model="editAccountForm.status"
+              placeholder="Active/Inactive" required>
+            </b-form-input>
+          </b-form-group>
+
+          <b-button type="submit" variant="outline-info">Update</b-button>
         </b-form>
       </b-modal>
       <!-- End of Modal for Edit Account-->
@@ -99,17 +127,20 @@ export default {
       createAccountForm: {
         name: "",
         rate: "",
-        favorite: "",
+        favorite: false,
         status: ""
       },
       editAccountForm: {
         id: "",
         name: "",
         rate: "",
-        favorite: "",
+        favorite: false,
+        status: ""
+
         
       },
       showMessage: false,
+      message: "",
 
     };
   },
@@ -120,11 +151,14 @@ export default {
       axios
         .get(path)
         .then((response) => {
-          this.accounts = response.data.accounts;
+          this.accounts = response.data.recipes;
+          // Print in cççonsoleççç
+          // console.log(response.data);
         })
         .catch((error) => {
           console.error(error);
         });
+
     },
     // POST function
     createAccount(payload) {
@@ -150,7 +184,11 @@ export default {
     },
     // Update function
     updateAccount(payload, accountId) {
+
       const path = `${process.env.VUE_APP_ROOT_URL}/recipes/${accountId}`;
+
+      console.log(payload);
+
       axios
         .put(path, payload)
         .then((response) => {
@@ -190,16 +228,19 @@ export default {
           this.getAccounts();
         });
     },
-    // Handle Delete button
-    deleteAccount(account) {
-      this.RESTdeleteAccount(account.id);
-    },
 
     initForm() {
       this.createAccountForm.name = "";
       this.createAccountForm.rate = "";
+      this.createAccountForm.favorite = "";
+      this.createAccountForm.status = "";
+
       this.editAccountForm.id = "";
       this.editAccountForm.name = "";
+      this.editAccountForm.rate = "";
+      this.editAccountForm.favorite = "";
+      this.editAccountForm.status = "";
+      
     },
     onSubmit(e) {
       e.preventDefault(); //prevent default form submit form the browser
@@ -207,6 +248,9 @@ export default {
       const payload = {
         name: this.createAccountForm.name,
         rate: this.createAccountForm.rate,
+        favorite: this.createAccountForm.favorite,
+        status: this.createAccountForm.status,
+        
       };
       this.createAccount(payload);
       this.initForm;
@@ -217,15 +261,25 @@ export default {
       this.$refs.editAccountModal.hide(); //hide the modal when submitted
       const payload = {
         name: this.editAccountForm.name,
+        rate: this.editAccountForm.rate,
+        favorite: this.editAccountForm.favorite,
+        status: this.editAccountForm.status,
       };
+
       this.updateAccount(payload, this.editAccountForm.id);
-    },
-    //Prepare edit account form with the name of the account
-    editAccount(account) {
-      this.editAccountForm.name = account.name;
-      this.editAccountForm.id = account.id;
+
+      this.initForm;
     },
 
+    //Prepare edit account form with the name of the account
+    editAccount(account) {
+      this.editAccountForm = account;
+    },
+
+    // Handle Delete button
+    deleteAccount(account) {
+      this.RESTdeleteAccount(account.id);
+    },
 
   },
   created() {
