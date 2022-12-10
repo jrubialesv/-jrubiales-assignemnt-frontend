@@ -15,26 +15,25 @@
             <thead>
               <tr>
                 <th scope="col">Recipe Name</th>
-                <th scope="col">Recipe rate</th>
-                <th scope="col">Recipe favorite</th>
-                <th scope="col">Recipe Status</th>
+                <th scope="col">Recipe Ingredients</th>
+                <th scope="col">Recipe Steps</th>
+                <th scope="col">Recipe Rating</th>
+                <th scope="col">Recipe Favorite</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="account in accounts" :key="account.id">
                 <td>{{ account.name }}</td>
+                <td>{{ account.ingredients }}</td>
+                <td>{{ account.steps }}</td>
                 <td>{{ account.rate }}</td>
+
                 <td>
                    <!--Add a checkbox  -->
                   <b-form-checkbox v-model="account.favorite" disabled ></b-form-checkbox>
                 </td>
-                <td>
-                  <span v-if="account.status == 'Active'" class="badge badge-success">{{ account.status }}</span>
-                  <span v-else class="badge badge-danger">{{
-                      account.status
-                  }}</span>
-                </td>
+            
                 <td>
                   <div class="btn-group" role="group">
                     <button type="button" class="btn btn-info btn-sm" v-b-modal.edit-account-modal
@@ -54,27 +53,31 @@
       <!-- Start of Modal for Create Account-->
       <b-modal ref="addAccountModal" id="account-modal" title="Create a new account" hide-backdrop hide-footer>
         <b-form @submit="onSubmit" class="w-100">
-          <b-form-group id="form-name-group" label="Account Name:" label-for="form-name-input">
-            <b-form-input id="form-name-input" type="text" v-model="createAccountForm.name" placeholder="Recipe Name"
+          <b-form-group id="form-name-group" label="Recipe Name:" label-for="form-name-input">
+            <b-form-input id="form-name-input" type="text" v-model="createAccountForm.name" placeholder="The name of the recipe"
+              required>
+            </b-form-input>
+          </b-form-group>
+          <b-form-group id="form-ingredients-group" label="Ingredients:" label-for="form-ingredients-input">
+            <b-form-input id="form-ingredients-input" type="text" v-model="createAccountForm.ingredients" placeholder="The ingredients needed"
+              required>
+            </b-form-input>
+          </b-form-group>
+          <b-form-group id="form-steps-group" label="Steps:" label-for="form-steps-input">
+            <b-form-input id="form-steps-input" type="text" v-model="createAccountForm.steps" placeholder="The step-by-step process"
               required>
             </b-form-input>
           </b-form-group>
           <b-form-group id="form-rate-group" label="Rate:" label-for="form-rate-input">
-            <b-form-input id="form-rate-input" type="text" v-model="createAccountForm.rate" placeholder="0-5"
+            <b-form-input id="form-rate-input" type="text" v-model="createAccountForm.rate" placeholder="1-5 star rating"
               required>
             </b-form-input>
           </b-form-group>
 
           <b-form-group id="form-favorite-group" label="Favorite:" label-for="form-favorite-input">
-            <b-form-checkbox id="form-favorite-input" type="bool" v-model="createAccountForm.favorite" placeholder="True/False"
+            <b-form-checkbox id="form-favorite-input" type="bool" v-model="createAccountForm.favorite" placeholder="Marked as favorite or not"
             >
             </b-form-checkbox>
-          </b-form-group>
-
-          <b-form-group id="form-status-group" label="Status:" label-for="form-status-input">
-            <b-form-input id="form-status-input" type="text" v-model="createAccountForm.status" placeholder="Active/Inactive"
-              required>
-            </b-form-input>
           </b-form-group>
 
           <b-button type="submit" variant="outline-info">Submit</b-button>
@@ -84,9 +87,21 @@
       <!-- Start of Modal for Edit Account-->
       <b-modal ref="editAccountModal" id="edit-account-modal" title="Edit the account" hide-backdrop hide-footer>
         <b-form @submit="onSubmitUpdate" class="w-100">
-          <b-form-group id="form-edit-name-group" label="Account Name:" label-for="form-edit-name-input">
+          <b-form-group id="form-edit-name-group" label="Recipe Name:" label-for="form-edit-name-input">
             <b-form-input id="form-edit-name-input" type="text" v-model="editAccountForm.name"
-              placeholder="Account Name" required>
+              placeholder="Recipe Name" required>
+            </b-form-input>
+          </b-form-group>
+
+          <b-form-group id="form-edit-ingredients-group" label="Ingredients:" label-for="form-edit-ingredients-input">
+            <b-form-input id="form-edit-ingredients-input" type="text" v-model="editAccountForm.ingredients"
+              placeholder="Recipe Ingredients" required>
+            </b-form-input>
+          </b-form-group>
+
+          <b-form-group id="form-edit-steps-group" label="Steps:" label-for="form-edit-steps-input">
+            <b-form-input id="form-edit-steps-input" type="text" v-model="editAccountForm.steps"
+              placeholder="Recipe Steps" required>
             </b-form-input>
           </b-form-group>
 
@@ -100,12 +115,6 @@
             <b-form-checkbox id="form-edit-favorite-input" type="bool" v-model="editAccountForm.favorite"
               placeholder="True/False" required>
             </b-form-checkbox>
-          </b-form-group>
-
-          <b-form-group id="form-edit-status-group" label="Status:" label-for="form-edit-status-input">
-            <b-form-input id="form-edit-status-input" type="text" v-model="editAccountForm.status"
-              placeholder="Active/Inactive" required>
-            </b-form-input>
           </b-form-group>
 
           <b-button type="submit" variant="outline-info">Update</b-button>
@@ -126,16 +135,18 @@ export default {
       accounts: [],
       createAccountForm: {
         name: "",
+        ingredients: "",
+        steps: "",
         rate: "",
         favorite: false,
-        status: ""
       },
       editAccountForm: {
         id: "",
         name: "",
+        ingredients: "",
+        steps: "",
         rate: "",
         favorite: false,
-        status: ""
 
         
       },
@@ -152,7 +163,7 @@ export default {
         .get(path)
         .then((response) => {
           this.accounts = response.data.recipes;
-          // Print in cççonsoleççç
+          // Print in cççonsole
           // console.log(response.data);
         })
         .catch((error) => {
@@ -231,26 +242,27 @@ export default {
 
     initForm() {
       this.createAccountForm.name = "";
+      this.createAccountForm.ingredients = "";
+      this.createAccountForm.steps = "";
       this.createAccountForm.rate = "";
       this.createAccountForm.favorite = false;
-      this.createAccountForm.status = "";
-
+      
       this.editAccountForm.id = "";
       this.editAccountForm.name = "";
+      this.editAccountForm.ingredients = "";
+      this.editAccountForm.steps = "";
       this.editAccountForm.rate = "";
       this.editAccountForm.favorite = false;
-      this.editAccountForm.status = "";
-      
     },
     onSubmit(e) {
       e.preventDefault(); //prevent default form submit form the browser
       this.$refs.addAccountModal.hide(); //hide the modal when submitted
       const payload = {
         name: this.createAccountForm.name,
+        ingredients: this.createAccountForm.ingredients,
+        steps: this.createAccountForm.steps,
         rate: this.createAccountForm.rate,
         favorite: this.createAccountForm.favorite,
-        status: this.createAccountForm.status,
-        
       };
       this.createAccount(payload);
       this.initForm;
@@ -261,9 +273,10 @@ export default {
       this.$refs.editAccountModal.hide(); //hide the modal when submitted
       const payload = {
         name: this.editAccountForm.name,
+        ingredients: this.editAccountForm.ingredients,
+        steps: this.editAccountForm.steps,
         rate: this.editAccountForm.rate,
         favorite: this.editAccountForm.favorite,
-        status: this.editAccountForm.status,
       };
 
       this.updateAccount(payload, this.editAccountForm.id);
