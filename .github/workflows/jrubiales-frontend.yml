@@ -51,7 +51,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'jrubiales-assignment-frontend-prod'
+          app-name: 'jrubiales-assignment-fe-prod'
           package: .
 
   deploy-dev:
@@ -76,5 +76,5 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'jrubiales-assignment-frontend-dev'
+          app-name: 'jrubiales-assignment-fe-dev'
           package: .
