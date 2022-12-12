@@ -12,13 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    {
-     "script": "serve",
-     "env": {
-         "PM2_SERVE_PATH": './build'
-     }
-     "args": '--no-daemon --spa'
-     }
 
     steps:
       - uses: actions/checkout@v2
@@ -88,7 +81,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         start-up-command: 'pm2 serve /home/site/wwwroot/dist --no-daemon --spa'
-        
+
         with:
           app-name: 'jrubiales-assignment-fe-dev'
           package: .
