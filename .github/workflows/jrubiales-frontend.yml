@@ -46,7 +46,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-app
-      - StartupCommand: 'pm2 serve /home/site/wwwroot/dist --no-daemon --spa'
+          StartupCommand: 'pm2 serve /home/site/wwwroot/dist --no-daemon --spa'
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -54,7 +54,7 @@ jobs:
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
-        start-up-command: 'pm2 serve /home/site/wwwroot/dist --no-daemon --spa'
+
         with:
           app-name: 'jrubiales-assignment-fe-prod'
           package: .
@@ -73,9 +73,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-app
-      
-      - StartupCommand: 'pm2 serve /home/site/wwwroot/dist --no-daemon --spa'
-
+          StartupCommand: 'pm2 serve /home/site/wwwroot/dist --no-daemon --spa'
       - input:
       - uses: azure/login@v1
         with:
