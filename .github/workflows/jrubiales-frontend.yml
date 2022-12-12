@@ -12,6 +12,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    {
+     "script": "serve",
+     "env": {
+         "PM2_SERVE_PATH": './build'
+     }
+     "args": '--no-daemon --spa'
+     }
+
     steps:
       - uses: actions/checkout@v2
 
@@ -29,6 +37,8 @@ jobs:
         with:
           name: node-app
           path: dist/
+      
+       
 
   deploy-prod:
     if: github.ref == 'refs/heads/main'
@@ -54,6 +64,7 @@ jobs:
         with:
           app-name: 'jrubiales-assignment-fe-prod'
           package: .
+          start-up-command: 'pm2 serve /home/site/wwwroot/dist --no-daemon --spa'
 
   deploy-dev:
     if: github.ref == 'refs/heads/dev'
@@ -76,6 +87,8 @@ jobs:
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
+        start-up-command: 'pm2 serve /home/site/wwwroot/dist --no-daemon --spa'
+        
         with:
           app-name: 'jrubiales-assignment-fe-dev'
           package: .
