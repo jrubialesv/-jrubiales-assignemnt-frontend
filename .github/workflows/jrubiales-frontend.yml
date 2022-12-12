@@ -12,14 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    {
-     "script": "serve",
-     "env": {
-         "PM2_SERVE_PATH": './build'
-     }
-     "args": '--no-daemon --spa'
-     }
-
     steps:
       - uses: actions/checkout@v2
 
