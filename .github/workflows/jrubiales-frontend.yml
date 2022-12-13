@@ -56,7 +56,7 @@ jobs:
         with:
           app-name: 'jrubiales-assignment-fe-prod'
           package: .
-          startup-command: pm2 serve /home/site/wwwroot/dist --no-daemon --spa
+          # startup-command: pm2 serve /home/site/wwwroot/dist --no-daemon --spa
 
   deploy-dev:
     if: github.ref == 'refs/heads/dev'
@@ -82,5 +82,5 @@ jobs:
         with:
           app-name: 'jrubiales-assignment-fe-dev'
           package: .
-          startup-command: pm2 serve /home/site/wwwroot/dist --no-daemon --spa
+          # startup-command: pm2 serve /home/site/wwwroot/dist --no-daemon --spa
 
