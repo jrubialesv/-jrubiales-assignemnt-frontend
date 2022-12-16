@@ -55,7 +55,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'jrubiales-assignment-fe-prod'
-          package: *
+          package: /dist
 
   deploy-dev:
     if: github.ref == 'refs/heads/dev'
@@ -80,4 +80,4 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'jrubiales-assignment-fe-dev'
-          package: *
+          package: /dist
