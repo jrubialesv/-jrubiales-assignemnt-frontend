@@ -27,8 +27,7 @@
                 <td>{{ account.name }}</td>
                 <td>{{ account.ingredients }}</td>
                 <td>{{ account.steps }}</td>
-                <td>{{ account.rate }}</td>
-
+                <td>{{ account.rate}}/5</td>    
                 <td>
                    <!--Add a checkbox  -->
                   <b-form-checkbox v-model="account.favorite" disabled ></b-form-checkbox>
@@ -53,30 +52,33 @@
       <!-- Start of Modal for Create Account-->
       <b-modal ref="addAccountModal" id="account-modal" title="Create a new account" hide-backdrop hide-footer>
         <b-form @submit="onSubmit" class="w-100">
+
           <b-form-group id="form-name-group" label="Recipe Name:" label-for="form-name-input">
             <b-form-input id="form-name-input" type="text" v-model="createAccountForm.name" placeholder="The name of the recipe"
               required>
             </b-form-input>
           </b-form-group>
+
           <b-form-group id="form-ingredients-group" label="Ingredients:" label-for="form-ingredients-input">
             <b-form-input id="form-ingredients-input" type="text" v-model="createAccountForm.ingredients" placeholder="The ingredients needed"
               required>
             </b-form-input>
           </b-form-group>
+
           <b-form-group id="form-steps-group" label="Steps:" label-for="form-steps-input">
             <b-form-input id="form-steps-input" type="text" v-model="createAccountForm.steps" placeholder="The step-by-step process"
               required>
             </b-form-input>
           </b-form-group>
-          <b-form-group id="form-rate-group" label="Rate:" label-for="form-rate-input">
-            <b-form-input id="form-rate-input" type="text" v-model="createAccountForm.rate" placeholder="1-5 star rating"
-              required>
+
+          <b-form-group id="form-rate-group" label="Rate 1 to 5:" label-for="form-rate-input">
+            <b-form-input id="form-rate-input" type="range" v-model="createAccountForm.rate" min="1" max="5" step="1" 
+            required>
             </b-form-input>
           </b-form-group>
 
           <b-form-group id="form-favorite-group" label="Favorite:" label-for="form-favorite-input">
-            <b-form-checkbox id="form-favorite-input" type="bool" v-model="createAccountForm.favorite" placeholder="Marked as favorite or not"
-            >
+            <b-form-checkbox id="form-favorite-input" type="bool" v-model="createAccountForm.favorite" placeholder="Marked as favorite or not">
             </b-form-checkbox>
           </b-form-group>
 
@@ -105,9 +107,9 @@
             </b-form-input>
           </b-form-group>
 
-          <b-form-group id="form-edit-rate-group" label="Rate:" label-for="form-edit-rate-input">
-            <b-form-input id="form-edit-rate-input" type="text" v-model="editAccountForm.rate"
-              placeholder="0-5" required>
+          <b-form-group id="form-edit-rate-group" label="Rate 1 to 5:" label-for="form-edit-rate-input">
+            <b-form-input id="form-edit-rate-input" type="range" v-model="editAccountForm.rate" min="1" max="5" step="1" 
+            required>
             </b-form-input>
           </b-form-group>
 
@@ -146,13 +148,10 @@ export default {
         ingredients: "",
         steps: "",
         rate: "",
-        favorite: false,
-
-        
+        favorite: false,        
       },
       showMessage: false,
       message: "",
-
     };
   },
   methods: {
@@ -169,7 +168,6 @@ export default {
         .catch((error) => {
           console.error(error);
         });
-
     },
     // POST function
     createAccount(payload) {
@@ -186,7 +184,6 @@ export default {
           setTimeout(() => {
             this.showMessage = false;
           }, 3000);
-
         })
         .catch((error) => {
           console.error(error);
@@ -278,22 +275,17 @@ export default {
         rate: this.editAccountForm.rate,
         favorite: this.editAccountForm.favorite,
       };
-
       this.updateAccount(payload, this.editAccountForm.id);
-
       this.initForm;
     },
-
     //Prepare edit account form with the name of the account
     editAccount(account) {
       this.editAccountForm = account;
     },
-
     // Handle Delete button
     deleteAccount(account) {
       this.RESTdeleteAccount(account.id);
     },
-
   },
   created() {
     this.getAccounts();
