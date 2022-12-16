@@ -6,12 +6,6 @@ import AppAccounts from '../components/AppAccounts.vue'
 Vue.use(VueRouter)  
 
 const routes = [
-
-  {
-    path: '/',
-    name: 'Skull',
-    component: Skull
-  },
   {
     path: '/skull',
     name: 'Skull',
