@@ -12,7 +12,7 @@ const routes = [
     component: Skull
   },
   {
-    path: '/recipes',
+    path: '/',
     name: 'AppAccounts',
     component: AppAccounts
   }
