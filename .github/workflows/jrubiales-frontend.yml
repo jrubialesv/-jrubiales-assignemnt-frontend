@@ -23,6 +23,7 @@ jobs:
       - name: npm install
         run: |
           npm install
+          npm install cross-env --save-dev
       - name: Build project prod
         if: github.ref == 'refs/heads/main'
         run: npm run build:prod
