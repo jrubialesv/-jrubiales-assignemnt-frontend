@@ -56,7 +56,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'jrubiales-assignment-fe-dev'
-          package: .    
+          package: release.zip 
   deploy-prod:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -80,5 +80,4 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'jrubiales-assignment-fe-prod'
-
-          package: .
+          package: release.zip
