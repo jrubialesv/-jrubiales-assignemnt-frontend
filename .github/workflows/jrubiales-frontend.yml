@@ -24,6 +24,7 @@ jobs:
         run: |
           npm install
           npm install cross-env --save-dev
+          npm install webpack-cli --save-dev
       - name: Build project prod
         if: github.ref == 'refs/heads/main'
         run: npm run build:prod
