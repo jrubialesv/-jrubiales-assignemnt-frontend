@@ -9,7 +9,8 @@ on:
 
 
 jobs:
-  build:
+  build-dev:
+    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
 
     steps:
@@ -19,9 +20,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-    
-      if: github.ref == 'refs/heads/dev'
-      - name: npm install dev
+
+      - name: npm install, build, and test
         run: |
           npm install
           npm run build --if-present -- --mode development
@@ -33,12 +33,23 @@ jobs:
         with:
           name: node-app
           path: release.zip
-      if: github.ref == 'refs/heads/main'
-      - name: npm install production
+  build-prod:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - name: npm install, build, and test
         run: |
           npm install
           npm run build --if-present -- --mode production
-      - name: Zip artifact for production
+      - name: Zip artifact for deployment
         run: zip release.zip ./* -qr
 
       - name: Upload artifact for deployment job
@@ -46,6 +57,7 @@ jobs:
         with:
           name: node-app
           path: release.zip
+          
 
   deploy-dev:
     if: github.ref == 'refs/heads/dev'
