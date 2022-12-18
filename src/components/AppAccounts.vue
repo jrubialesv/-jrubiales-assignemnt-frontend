@@ -27,7 +27,7 @@
                 <td>{{ account.name }}</td>
                 <td>{{ account.ingredients }}</td>
                 <td>{{ account.steps }}</td>
-                <td>{{ account.rate}}/5</td>    
+                <td><b-form-rating v-model="account.rate" readonly></b-form-rating></td>    
                 <td>
                    <!--Add a checkbox  -->
                   <b-form-checkbox v-model="account.favorite" disabled ></b-form-checkbox>
@@ -53,28 +53,66 @@
       <b-modal ref="addAccountModal" id="account-modal" title="Create a new account" hide-backdrop hide-footer>
         <b-form @submit="onSubmit" class="w-100">
 
-          <b-form-group id="form-name-group" label="Recipe Name:" label-for="form-name-input">
-            <b-form-input id="form-name-input" type="text" v-model="createAccountForm.name" placeholder="The name of the recipe"
-              required>
+          <b-form-group id="form-name-group" label="Name:" label-for="form-name-input">
+            <b-form-input
+              id="form-name-input"
+              v-model="createAccountForm.name"
+              :state="nameStatename"
+              aria-describedby="input-live-help input-live-feedback"
+              placeholder="The name of the recipe"
+              trim>
             </b-form-input>
+
+            <!-- This will only be shown if the preceding input has an invalid state -->
+            <b-form-invalid-feedback id="input-live-feedback">
+              Enter less than 128 characters.
+            </b-form-invalid-feedback>
+
+            <!-- This is a form text block (formerly known as help block) -->
+            <b-form-text id="input-live-help">Maximum 128 characters</b-form-text>
           </b-form-group>
 
           <b-form-group id="form-ingredients-group" label="Ingredients:" label-for="form-ingredients-input">
-            <b-form-input id="form-ingredients-input" type="text" v-model="createAccountForm.ingredients" placeholder="The ingredients needed"
-              required>
+            <b-form-input
+              id="form-ingredients-input"
+              v-model="createAccountForm.ingredients"
+              :state="nameStateingr"
+              aria-describedby="input-live-help input-live-feedback"
+              placeholder="The ingredients of the recipe"
+              trim>
             </b-form-input>
+
+            <!-- This will only be shown if the preceding input has an invalid state-->
+            <b-form-invalid-feedback id="input-live-feedback">
+              Enter less than 128 characters.
+            </b-form-invalid-feedback>
+
+              <!-- This is a form text block (formerly known as help block) -->
+            <b-form-text id="input-live-help">Maximum 128 characters</b-form-text>
           </b-form-group>
 
           <b-form-group id="form-steps-group" label="Steps:" label-for="form-steps-input">
-            <b-form-input id="form-steps-input" type="text" v-model="createAccountForm.steps" placeholder="The step-by-step process"
-              required>
+            <b-form-input
+              id="form-steps-input"
+              v-model="createAccountForm.steps"
+              :state="nameStatesteps"
+              aria-describedby="input-live-help input-live-feedback"
+              placeholder="The steps of the recipe"
+              trim>
             </b-form-input>
+
+            <!-- This will only be shown if the preceding input has an invalid state -->
+            <b-form-invalid-feedback id="input-live-feedback">
+              Enter less than 128 characters.
+            </b-form-invalid-feedback>
+
+            <!-- This is a form text block (formerly known as help block) -->
+            <b-form-text id="input-live-help">Maximum 128 characters</b-form-text>
           </b-form-group>
 
-          <b-form-group id="form-rate-group" label="Rate 1 to 5:" label-for="form-rate-input">
-            <b-form-input id="form-rate-input" type="range" v-model="createAccountForm.rate" min="1" max="5" step="1" 
-            required>
-            </b-form-input>
+          <b-form-group id="form-rate-group" label="Please select a value from the range 0 to 5" label-for="form-rate-input">
+            <b-form-rating id="form-rate-input" v-model="createAccountForm.rate" >
+            </b-form-rating>
           </b-form-group>
 
           <b-form-group id="form-favorite-group" label="Favorite:" label-for="form-favorite-input">
@@ -89,36 +127,73 @@
       <!-- Start of Modal for Edit Account-->
       <b-modal ref="editAccountModal" id="edit-account-modal" title="Edit the account" hide-backdrop hide-footer>
         <b-form @submit="onSubmitUpdate" class="w-100">
-          <b-form-group id="form-edit-name-group" label="Recipe Name:" label-for="form-edit-name-input">
-            <b-form-input id="form-edit-name-input" type="text" v-model="editAccountForm.name"
-              placeholder="Recipe Name" required>
+
+          <b-form-group id="form-edit-name-group" label="Name:" label-for="form-edit-name-input">
+            <b-form-input
+              id="form-edit-name-input"
+              v-model="editAccountForm.name"
+              :state="nameStatename"
+              aria-describedby="input-live-help input-live-feedback"
+              placeholder="The name of the recipe"
+              trim>
             </b-form-input>
+
+            <!-- This will only be shown if the preceding input has an invalid state -->
+            <b-form-invalid-feedback id="input-live-feedback">
+              Enter less than 128 characters.
+            </b-form-invalid-feedback>
+
+            <!-- This is a form text block (formerly known as help block) -->
+            <b-form-text id="input-live-help">Maximum 128 characters</b-form-text>
           </b-form-group>
 
           <b-form-group id="form-edit-ingredients-group" label="Ingredients:" label-for="form-edit-ingredients-input">
-            <b-form-input id="form-edit-ingredients-input" type="text" v-model="editAccountForm.ingredients"
-              placeholder="Recipe Ingredients" required>
+            <b-form-input
+              id="form-edit-ingredients-input"
+              v-model="editAccountForm.ingredients"
+              :state="nameStateingr"
+              aria-describedby="input-live-help input-live-feedback"
+              placeholder="The ingredients of the recipe"
+              trim>
             </b-form-input>
+
+            <!-- This will only be shown if the preceding input has an invalid state -->
+            <b-form-invalid-feedback id="input-live-feedback">
+              Enter less than 128 characters.
+            </b-form-invalid-feedback>
+
+              <!-- This is a form text block (formerly known as help block) -->
+            <b-form-text id="input-live-help">Maximum 128 characters</b-form-text>
           </b-form-group>
 
           <b-form-group id="form-edit-steps-group" label="Steps:" label-for="form-edit-steps-input">
-            <b-form-input id="form-edit-steps-input" type="text" v-model="editAccountForm.steps"
-              placeholder="Recipe Steps" required>
+            <b-form-input
+              id="form-edit-steps-input"
+              v-model="editAccountForm.steps"
+              :state="nameStatesteps"
+              aria-describedby="input-live-help input-live-feedback"
+              placeholder="The steps of the recipe"
+              trim>
             </b-form-input>
+
+            <!-- This will only be shown if the preceding input has an invalid state -->
+            <b-form-invalid-feedback id="input-live-feedback">
+              Enter less than 128 characters.
+            </b-form-invalid-feedback>
+
+            <!-- This is a form text block (formerly known as help block) -->
+            <b-form-text id="input-live-help">Maximum 128 characters</b-form-text>
           </b-form-group>
 
-          <b-form-group id="form-edit-rate-group" label="Rate 1 to 5:" label-for="form-edit-rate-input">
-            <b-form-input id="form-edit-rate-input" type="range" v-model="editAccountForm.rate" min="1" max="5" step="1" 
-            required>
-            </b-form-input>
+          <b-form-group id="form-edit-rate-group" label="Please select a value from the range 0 to 5" label-for="form-edit-rate-input">
+            <b-form-rating id="form-edit-rate-input" v-model="editAccountForm.rate" >
+            </b-form-rating>
           </b-form-group>
 
           <b-form-group id="form-edit-favorite-group" label="Favorite:" label-for="form-edit-favorite-input">
-            <b-form-checkbox id="form-edit-favorite-input" type="bool" v-model="editAccountForm.favorite"
-              placeholder="True/False" required>
+            <b-form-checkbox id="form-edit-favorite-input" type="bool" v-model="editAccountForm.favorite" placeholder="Marked as favorite or not">
             </b-form-checkbox>
           </b-form-group>
-
           <b-button type="submit" variant="outline-info">Update</b-button>
         </b-form>
       </b-modal>
@@ -131,6 +206,19 @@
 <script>
 import axios from "axios";
 export default {
+
+  computed: {
+      nameStatename() {
+        return this.createAccountForm.name.length < 128 ? true : false
+      },
+      nameStateingr() {
+        return this.createAccountForm.ingredients.length < 128 ? true : false
+      },
+      nameStatesteps() {
+        return this.createAccountForm.steps.length < 128 ? true : false
+      }
+    },
+
   name: "AppAccounts",
   data() {
     return {
@@ -139,7 +227,7 @@ export default {
         name: "",
         ingredients: "",
         steps: "",
-        rate: "",
+        rate: "0",
         favorite: false,
       },
       editAccountForm: {
@@ -215,6 +303,8 @@ export default {
           this.getAccounts();
         });
     },
+    // Preventive measure, this is rubiales code to prevent a 0 if someone copy and paste -
+    // the code, forget to delete these lines, and professor finds out 
     // Delete account
     RESTdeleteAccount(accountId) {
       const path = `${process.env.VUE_APP_ROOT_URL}/${accountId}`;
@@ -265,6 +355,7 @@ export default {
       this.initForm;
     },
     // Handle submit event for edit account
+    
     onSubmitUpdate(e) {
       e.preventDefault(); //prevent default form submit form the browser
       this.$refs.editAccountModal.hide(); //hide the modal when submitted
@@ -275,6 +366,7 @@ export default {
         rate: this.editAccountForm.rate,
         favorite: this.editAccountForm.favorite,
       };
+
       this.updateAccount(payload, this.editAccountForm.id);
       this.initForm;
     },
