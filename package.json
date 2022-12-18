@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:dev": "cross-env NODE_ENV=development VUE_APP_ROOT_URL=https://jrubiales-assignment-be-dev.azurewebsites.net/recipes webpack --config build/webpack.config.js",
+    "build:dev": "VUE_APP_ROOT_URL=https://jrubiales-assignment-be-dev.azurewebsites.net/recipes vue-cli-service build",
     "build:prod": "VUE_APP_ROOT_URL= https://jrubiales-assignment-be-prod.azurewebsites.net/recipes"
   },
   "dependencies": {
