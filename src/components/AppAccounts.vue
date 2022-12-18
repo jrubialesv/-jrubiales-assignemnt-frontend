@@ -221,7 +221,7 @@ export default {
         return this.editAccountForm.name.length  > 0 && this.editAccountForm.name.length  < 128? true : false
       },
       nameStateingredit() {
-        return this.editAccountForm.ingredients > 0 && this.editAccountForm.ingredients.length < 128 ? true : false
+        return this.editAccountForm.ingredients.length > 0 && this.editAccountForm.ingredients.length < 128 ? true : false
       },
       nameStatestepsedit() {
         return this.editAccountForm.steps.length > 0 && this.editAccountForm.steps.length < 128 ? true : false
