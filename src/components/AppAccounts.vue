@@ -27,7 +27,7 @@
                 <td>{{ account.name }}</td>
                 <td>{{ account.ingredients }}</td>
                 <td>{{ account.steps }}</td>
-                <td><b-form-rating v-model="account.rate" readonly></b-form-rating></td>    
+                <td><b-form-rating v-model="account.rate" readonly variant="warning"> </b-form-rating></td>    
                 <td>
                    <!--Add a checkbox  -->
                   <b-form-checkbox v-model="account.favorite" disabled ></b-form-checkbox>
@@ -65,11 +65,11 @@
 
             <!-- This will only be shown if the preceding input has an invalid state -->
             <b-form-invalid-feedback id="input-live-feedback">
-              Enter less than 128 characters.
+              Enter between 0 and 128 characters.
             </b-form-invalid-feedback>
 
             <!-- This is a form text block (formerly known as help block) -->
-            <b-form-text id="input-live-help">Maximum 128 characters</b-form-text>
+            <b-form-text id="input-live-help">Minimum 1 character or maximum 128 characters</b-form-text>
           </b-form-group>
 
           <b-form-group id="form-ingredients-group" label="Ingredients:" label-for="form-ingredients-input">
@@ -82,13 +82,13 @@
               trim>
             </b-form-input>
 
-            <!-- This will only be shown if the preceding input has an invalid state-->
+            <!-- This will only be shown if the preceding input has an invalid state -->
             <b-form-invalid-feedback id="input-live-feedback">
-              Enter less than 128 characters.
+              Enter between 0 and 128 characters.
             </b-form-invalid-feedback>
 
-              <!-- This is a form text block (formerly known as help block) -->
-            <b-form-text id="input-live-help">Maximum 128 characters</b-form-text>
+            <!-- This is a form text block (formerly known as help block) -->
+            <b-form-text id="input-live-help">Minimum 1 character or maximum 128 characters</b-form-text>
           </b-form-group>
 
           <b-form-group id="form-steps-group" label="Steps:" label-for="form-steps-input">
@@ -103,15 +103,15 @@
 
             <!-- This will only be shown if the preceding input has an invalid state -->
             <b-form-invalid-feedback id="input-live-feedback">
-              Enter less than 128 characters.
+              Enter between 0 and 128 characters.
             </b-form-invalid-feedback>
 
             <!-- This is a form text block (formerly known as help block) -->
-            <b-form-text id="input-live-help">Maximum 128 characters</b-form-text>
+            <b-form-text id="input-live-help">Minimum 1 character or maximum 128 characters</b-form-text>
           </b-form-group>
 
-          <b-form-group id="form-rate-group" label="Please select a value from the range 0 to 5" label-for="form-rate-input">
-            <b-form-rating id="form-rate-input" v-model="createAccountForm.rate" >
+          <b-form-group id="form-rate-group" label="Please select a value from the range 0 to 5:" label-for="form-rate-input">
+            <b-form-rating id="form-rate-input" v-model="createAccountForm.rate" variant="warning" show-value>
             </b-form-rating>
           </b-form-group>
 
@@ -132,7 +132,7 @@
             <b-form-input
               id="form-edit-name-input"
               v-model="editAccountForm.name"
-              :state="nameStatename"
+              :state="nameStatenameedit"
               aria-describedby="input-live-help input-live-feedback"
               placeholder="The name of the recipe"
               trim>
@@ -140,18 +140,18 @@
 
             <!-- This will only be shown if the preceding input has an invalid state -->
             <b-form-invalid-feedback id="input-live-feedback">
-              Enter less than 128 characters.
+              Enter between 0 and 128 characters.
             </b-form-invalid-feedback>
 
             <!-- This is a form text block (formerly known as help block) -->
-            <b-form-text id="input-live-help">Maximum 128 characters</b-form-text>
+            <b-form-text id="input-live-help">Minimum 1 character or maximum 128 characters</b-form-text>
           </b-form-group>
 
           <b-form-group id="form-edit-ingredients-group" label="Ingredients:" label-for="form-edit-ingredients-input">
             <b-form-input
               id="form-edit-ingredients-input"
               v-model="editAccountForm.ingredients"
-              :state="nameStateingr"
+              :state="nameStateingredit"
               aria-describedby="input-live-help input-live-feedback"
               placeholder="The ingredients of the recipe"
               trim>
@@ -159,18 +159,18 @@
 
             <!-- This will only be shown if the preceding input has an invalid state -->
             <b-form-invalid-feedback id="input-live-feedback">
-              Enter less than 128 characters.
+              Enter between 0 and 128 characters.
             </b-form-invalid-feedback>
 
-              <!-- This is a form text block (formerly known as help block) -->
-            <b-form-text id="input-live-help">Maximum 128 characters</b-form-text>
+            <!-- This is a form text block (formerly known as help block) -->
+            <b-form-text id="input-live-help">Minimum 1 character or maximum 128 characters</b-form-text>
           </b-form-group>
 
           <b-form-group id="form-edit-steps-group" label="Steps:" label-for="form-edit-steps-input">
             <b-form-input
               id="form-edit-steps-input"
               v-model="editAccountForm.steps"
-              :state="nameStatesteps"
+              :state="nameStatestepsedit"
               aria-describedby="input-live-help input-live-feedback"
               placeholder="The steps of the recipe"
               trim>
@@ -178,15 +178,15 @@
 
             <!-- This will only be shown if the preceding input has an invalid state -->
             <b-form-invalid-feedback id="input-live-feedback">
-              Enter less than 128 characters.
+              Enter between 0 and 128 characters.
             </b-form-invalid-feedback>
 
             <!-- This is a form text block (formerly known as help block) -->
-            <b-form-text id="input-live-help">Maximum 128 characters</b-form-text>
+            <b-form-text id="input-live-help">Minimum 1 character or maximum 128 characters</b-form-text>
           </b-form-group>
 
           <b-form-group id="form-edit-rate-group" label="Please select a value from the range 0 to 5" label-for="form-edit-rate-input">
-            <b-form-rating id="form-edit-rate-input" v-model="editAccountForm.rate" >
+            <b-form-rating id="form-edit-rate-input" v-model="editAccountForm.rate" variant="warning" show-value>
             </b-form-rating>
           </b-form-group>
 
@@ -209,13 +209,22 @@ export default {
 
   computed: {
       nameStatename() {
-        return this.createAccountForm.name.length < 128 ? true : false
+        return this.createAccountForm.name.length  > 0 && this.createAccountForm.name.length  < 128? true : false
       },
       nameStateingr() {
-        return this.createAccountForm.ingredients.length < 128 ? true : false
+        return this.createAccountForm.ingredients.length > 0 && this.createAccountForm.ingredients.length < 128 ? true : false
       },
       nameStatesteps() {
-        return this.createAccountForm.steps.length < 128 ? true : false
+        return this.createAccountForm.steps.length > 0 && this.createAccountForm.steps.length < 128 ? true : false
+      },
+      nameStatenameedit() {
+        return this.editAccountForm.name.length  > 0 && this.editAccountForm.name.length  < 128? true : false
+      },
+      nameStateingredit() {
+        return this.editAccountForm.ingredients > 0 && this.editAccountForm.ingredients.length < 128 ? true : false
+      },
+      nameStatestepsedit() {
+        return this.editAccountForm.steps.length > 0 && this.editAccountForm.steps.length < 128 ? true : false
       }
     },
 
