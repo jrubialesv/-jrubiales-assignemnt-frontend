@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build:dev": "VUE_APP_ROOT_URL=https://jrubiales-assignment-be-dev.azurewebsites.net/recipes vue-cli-service build",
-    "build:prod": "VUE_APP_ROOT_URL= https://jrubiales-assignment-be-prod.azurewebsites.net/recipes"
+    "build": "vue-cli-service build"
+
   },
   "dependencies": {
     "axios": "^1.2.0",
