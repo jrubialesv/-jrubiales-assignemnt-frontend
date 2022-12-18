@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:dev": "vue-cli-service build VUE_APP_ROOT_URL=https://jrubiales-assignment-be-dev.azurewebsites.net/",
+    "build:dev": "VUE_APP_ROOT_URL=https://jrubiales-assignment-be-dev.azurewebsites.net/ vue-cli-service build",
     "build:prod": "VUE_APP_ROOT_URL= https://jrubiales-assignment-be-prod.azurewebsites.net/"
   },
   "dependencies": {
