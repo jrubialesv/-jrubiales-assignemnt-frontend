@@ -25,10 +25,11 @@ jobs:
           npm install
       - name: Build project prod
         if: github.ref == 'refs/heads/main'
-        run: npm run build:prod
+        run: npm run build --if-present -- --mode production
+
       - name: Build project dev
         if: github.ref == 'refs/heads/dev'
-        run: npm run build:dev
+        run: npm run build --if-present -- --mode development
 
       - name: Zip for deployment
         run: zip release.zip ./* -qr
@@ -63,6 +64,7 @@ jobs:
         with:
           app-name: 'jrubiales-assignment-fe-dev'
           package: release.zip   
+
   deploy-prod:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
