@@ -19,12 +19,26 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-
-      - name: npm install
+    
+      if: github.ref == 'refs/heads/dev'
+      - name: npm install dev
         run: |
           npm install
           npm run build --if-present -- --mode development
       - name: Zip artifact for deployment
+        run: zip release.zip ./* -qr
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: node-app
+          path: release.zip
+      if: github.ref == 'refs/heads/main'
+      - name: npm install production
+        run: |
+          npm install
+          npm run build --if-present -- --mode production
+      - name: Zip artifact for production
         run: zip release.zip ./* -qr
 
       - name: Upload artifact for deployment job
