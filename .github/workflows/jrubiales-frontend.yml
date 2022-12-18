@@ -25,11 +25,11 @@ jobs:
           npm install
       - name: Build project prod
         if: github.ref == 'refs/heads/main'
-        run: npm run build --if-present -- --mode production
+        run: npm run build:prod --if-present
 
       - name: Build project dev
         if: github.ref == 'refs/heads/dev'
-        run: npm run build --if-present -- --mode development
+        run: npm run build:dev --if-present 
 
       - name: Zip for deployment
         run: zip release.zip ./* -qr
