@@ -254,7 +254,7 @@ export default {
   methods: {
     // GET accounts
     getAccounts() {
-      const path = `${process.env.VUE_APP_ROOT_URL}/`;
+      const path = `${process.env.VUE_APP_ROOT_URL}/recipes`;
       axios
         .get(path)
         .then((response) => {
@@ -268,7 +268,7 @@ export default {
     },
     // POST function
     createAccount(payload) {
-      const path = `${process.env.VUE_APP_ROOT_URL}/`;
+      const path = `${process.env.VUE_APP_ROOT_URL}/recipes`;
       axios
         .post(path, payload)
         .then((response) => {
@@ -290,7 +290,7 @@ export default {
     // Update function
     updateAccount(payload, accountId) {
 
-      const path = `${process.env.VUE_APP_ROOT_URL}/${accountId}`;
+      const path = `${process.env.VUE_APP_ROOT_URL}/recipes/${accountId}`;
 
       console.log(payload);
 
@@ -316,7 +316,7 @@ export default {
     // the code, forget to delete these lines, and professor finds out 
     // Delete account
     RESTdeleteAccount(accountId) {
-      const path = `${process.env.VUE_APP_ROOT_URL}/${accountId}`;
+      const path = `${process.env.VUE_APP_ROOT_URL}/recipes/${accountId}`;
       axios
         .delete(path)
         .then((response) => {
