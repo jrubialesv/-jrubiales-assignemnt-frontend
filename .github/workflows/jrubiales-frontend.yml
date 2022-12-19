@@ -25,6 +25,13 @@ jobs:
           npm install
       
       
+      - name: Build for production
+        if: github.ref == 'refs/heads/main'
+        run: |
+          npm run build:prod
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          npm run build:dev       
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -qr
