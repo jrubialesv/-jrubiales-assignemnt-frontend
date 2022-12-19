@@ -23,14 +23,6 @@ jobs:
       - name: npm install, build, and test 
         run: |
           npm install
-      
-      - name: Build for production
-        if: github.ref == 'refs/heads/main'
-        run: |
-          npm run build --if-present
-      - name: Build for development
-        if: github.ref == 'refs/heads/dev'
-        run: |
           npm run build --if-present
 
       - name: Zip artifact for deployment
