@@ -1,4 +1,15 @@
-build-dev:
+name: Build and deploy VueJS app to Azure Web App
+
+on:
+  push:
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main", "dev" ]
+  workflow_dispatch:
+
+
+jobs:
+  build-dev:
     if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
 
